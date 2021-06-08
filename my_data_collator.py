@@ -1,15 +1,6 @@
 from dataclasses import dataclass
-from typing import (
-    TYPE_CHECKING,
-    Any,
-    Dict,
-    List,
-    NamedTuple,
-    Optional,
-    Sequence,
-    Tuple,
-    Union,
-)
+from typing import (TYPE_CHECKING, Any, Dict, List, NamedTuple, Optional,
+                    Sequence, Tuple, Union)
 
 import numpy as np
 import tokenizers
@@ -27,6 +18,8 @@ class MyDataCollatorForPreTraining:
     pad_to_multiple_of: Optional[int] = None
 
     def __post_init__(self):
+        # print(self.mlm, self.tokenzier.token_to_id("[MASK]"))
+        # input()
         if self.mlm and self.tokenizer.token_to_id("[MASK]") is None:
             raise ValueError(
                 "This tokenizer does not have a mask token which is necessary for masked language modeling. "
@@ -36,6 +29,7 @@ class MyDataCollatorForPreTraining:
     def __call__(
         self, examples: List[Union[List[int], torch.Tensor, Dict[str, torch.Tensor]]],
     ) -> Dict[str, torch.Tensor]:
+        # print(examples)
         # Handle dict or lists with proper padding and conversion to tensor.
         if isinstance(examples[0], (dict, BatchEncoding)):
             batch = pad(
@@ -56,6 +50,9 @@ class MyDataCollatorForPreTraining:
             batch["input_ids"], batch["labels"] = self.mask_tokens(
                 batch["input_ids"], special_tokens_mask=special_tokens_mask
             )
+        else:
+            batch["input_ids"] = torch.squeeze(batch["input_ids"], dim=0)
+            batch["token_type_ids"] = torch.squeeze(batch["token_type_ids"], dim=0)
         return batch
 
     def mask_tokens(

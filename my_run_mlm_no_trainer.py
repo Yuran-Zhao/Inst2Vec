@@ -187,8 +187,7 @@ def main():
     #     field="data",
     # )
     train_files = [
-        os.path.join(CURRENT_DATA_BASE, "inst.1.{}.json".format(i))
-        for i in range(0, 128, 2)
+        os.path.join(CURRENT_DATA_BASE, "inst.all.{}.json".format(i)) for i in range(2)
     ]
     valid_file = "/home/ming/malware/inst2vec_bert/data/test_lm/inst.json"
     raw_datasets = load_dataset(
@@ -199,7 +198,7 @@ def main():
 
     # we use the tokenizer previously trained on the dataset above
     tokenizer = tokenizers.Tokenizer.from_file(
-        os.path.join(CURRENT_DATA_BASE, "tokenizer-inst.1.json")
+        os.path.join(CURRENT_DATA_BASE, "tokenizer-inst.all.json")
     )
 
     # NOTE: have to promise the `length` here is consistent with the one used in `train_my_tokenizer.py`
@@ -254,6 +253,7 @@ def main():
         batched=True,
         num_proc=args.preprocessing_num_workers,
         remove_columns=column_names,
+        load_from_cache_file=False,
     )
 
     train_dataset = tokenized_datasets["train"]
