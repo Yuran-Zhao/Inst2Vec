@@ -26,11 +26,11 @@ def write_worker(sents, json_file, index):
 def merge_to_json(pos, neg, json_file):
     sents = read_file(pos)
 
-    p = Pool(36)
+    p = Pool(6)
 
-    for i in range(64):
+    for i in range(6):
         p.apply_async(
-            write_worker, args=(sents[i * BASE : (i + 1) * BASE], json_file, i,)
+            write_worker, args=(sents[i * BASE : (i + 1) * BASE], json_file, 2+i,)
         )
     print("Waiting for all sub-processes done...")
     p.close()
@@ -55,11 +55,11 @@ def merge_to_json(pos, neg, json_file):
 
     sents = read_file(neg)
 
-    p = Pool(8)
+    p = Pool(6)
 
-    for i in range(64):
+    for i in range(6):
         p.apply_async(
-            write_worker, args=(sents[i * BASE : (i + 1) * BASE], json_file, 64 + i,)
+            write_worker, args=(sents[i * BASE : (i + 1) * BASE], json_file, 8 + i,)
         )
     print("Waiting for all sub-processes done...")
     p.close()
@@ -80,11 +80,15 @@ def merge_to_json(pos, neg, json_file):
 
 def main():
     # for i in range(6):
-    for i in [1]:
-        pos = os.path.join(ORIGINAL_DATA_BASE, "inst.{}.pos.label.txt".format(i))
-        neg = os.path.join(ORIGINAL_DATA_BASE, "inst.{}.neg.label.txt".format(i))
-        json_file = os.path.join(CURRENT_DATA_BASE, "inst.{}.".format(i))
-        merge_to_json(pos, neg, json_file)
+    # for i in range(6):
+    #     pos = os.path.join(ORIGINAL_DATA_BASE, "inst.{}.pos.label.txt".format(i))
+    #     neg = os.path.join(ORIGINAL_DATA_BASE, "inst.{}.neg.label.txt".format(i))
+    #     json_file = os.path.join(CURRENT_DATA_BASE, "inst.{}.".format(i))
+    #     merge_to_json(pos, neg, json_file)
+    pos = os.path.join(ORIGINAL_DATA_BASE, "inst.all.pos.txt.clean.label")
+    neg = os.path.join(ORIGINAL_DATA_BASE, "inst.all.neg.txt.clean.label")
+    json_file = os.path.join(CURRENT_DATA_BASE, "inst.all.")
+    merge_to_json(pos, neg, json_file)
 
 
 if __name__ == "__main__":

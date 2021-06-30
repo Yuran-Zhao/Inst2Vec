@@ -1,6 +1,7 @@
 import os
 
-ORIGINAL_DATA_BASE = "/home/ming/malware/data/elfasm_inst_pairs"
+# ORIGINAL_DATA_BASE = "/home/ming/malware/data/elfasm_inst_pairs"
+ORIGINAL_DATA_BASE = "/home/ming/malware/data/malasm_inst_pairs"
 CURRENT_DATA_BASE = "/home/ming/malware/inst2vec_bert/data/asm_bert"
 
 

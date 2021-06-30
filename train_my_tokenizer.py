@@ -99,8 +99,8 @@ def main(tokenizer_file=""):
     # dataset = load_dataset("json", data_files=json_files, field="data")
 
     text_files = [
-        os.path.join(ORIGINAL_DATA_BASE, "inst.1.{}.txt".format(group))
-        for group in ["pos", "neg"]
+        os.path.join(ORIGINAL_DATA_BASE, "inst.{}.{}.txt.clean".format(i, group))
+        for group in ["pos", "neg"] for i in range(10)
     ]
 
     dataset = []
@@ -121,4 +121,4 @@ def main(tokenizer_file=""):
 
 
 if __name__ == "__main__":
-    main(os.path.join(CURRENT_DATA_BASE, "tokenizer-inst.1.json"))
+    main(os.path.join(CURRENT_DATA_BASE, "tokenizer-inst.all.json"))

@@ -43,6 +43,8 @@ from transformers import (CONFIG_MAPPING, MODEL_MAPPING, AdamW, AutoConfig,
 from my_data_collator import MyDataCollatorForPreTraining
 from process_data.utils import CURRENT_DATA_BASE
 
+HIDDEN_SIZE=256
+
 logger = logging.getLogger(__name__)
 MODEL_CONFIG_CLASSES = list(MODEL_MAPPING.keys())
 MODEL_TYPES = tuple(conf.model_type for conf in MODEL_CONFIG_CLASSES)
@@ -187,7 +189,7 @@ def main():
     #     field="data",
     # )
     train_files = [
-        os.path.join(CURRENT_DATA_BASE, "inst.all.{}.json".format(i)) for i in range(2)
+        os.path.join(CURRENT_DATA_BASE, "inst.all.{}.json".format(i)) for i in [0,1,2,3,4,5,6]  # ,8,9,10,11,12,13]
     ]
     valid_file = "/home/ming/malware/inst2vec_bert/data/test_lm/inst.json"
     raw_datasets = load_dataset(
@@ -210,10 +212,10 @@ def main():
     # we use a much smaller BERT, config is:
     config = BertConfig(
         vocab_size=tokenizer.get_vocab_size(),
-        hidden_size=96,
+        hidden_size=HIDDEN_SIZE,
         num_hidden_layers=4,
-        num_attention_heads=12,
-        intermediate_size=384,
+        num_attention_heads=8,
+        intermediate_size=4 * HIDDEN_SIZE,
         max_position_embeddings=32,
     )
 
@@ -230,7 +232,10 @@ def main():
     def tokenize_function(examples):
         text = [tuple(sent) for sent in examples["text"]]
         encoded_inputs = {}
+        # try:
         results = tokenizer.encode_batch(text)
+        # except:
+        #     return None
         encoded_inputs["input_ids"] = [result.ids for result in results]
         encoded_inputs["token_type_ids"] = [result.type_ids for result in results]
         encoded_inputs["special_tokens_mask"] = [
@@ -253,7 +258,7 @@ def main():
         batched=True,
         num_proc=args.preprocessing_num_workers,
         remove_columns=column_names,
-        load_from_cache_file=False,
+        load_from_cache_file=True,
     )
 
     train_dataset = tokenized_datasets["train"]

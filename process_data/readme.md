@@ -31,7 +31,10 @@ We process the files containing negative examples similarly.
 cat inst.*.neg.txt.clean | sort -n | uniq > inst.all.neg.txt.clean
 ```
 
-Based on the `inst.all.pos.txt.clean`, we remove the lines from `inst.all.neg.txt.clean` if they also occur in `inst.all.pos.txt.clean`. This can be completed by `python clean.py`.
+Based on the `inst.all.pos.txt.clean`, we remove the lines from `inst.all.neg.txt.clean` if they also occur in `inst.all.pos.txt.clean`. This can be completed by `python clean.py`, or
+<!-- ```shell
+grep -v -f inst.all.pos.txt.clean inst.all.neg.txt.clean > inst.all.neg.txt.clean
+``` -->
 
 
 ### 5. convert to json format

@@ -41,12 +41,12 @@ def counter(filename):
 def main():
     cnt = set()
     # for i in range(6):
-    for i in [1]:
+    for i in range(10):
         for group in ["pos", "neg"]:
             filename = os.path.join(
-                ORIGINAL_DATA_BASE, "inst.{}.{}.txt".format(i, group)
+                ORIGINAL_DATA_BASE, "inst.{}.{}.txt.clean".format(i, group)
             )
-            cnt += counter(filename)
+            cnt = cnt.union(counter(filename))
     print("There are {} charcters in all files".format(len(cnt)))
 
 

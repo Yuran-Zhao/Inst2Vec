@@ -22,10 +22,12 @@ def create(pos, neg, tgt):
 
 def main():
     # for i in range(6):
-    for i in [1]:
-        j = (i + 1) % 6
-        pos = os.path.join(ORIGINAL_DATA_BASE, "linux32_0{}xxxx.all".format(i))
-        neg = os.path.join(ORIGINAL_DATA_BASE, "linux32_0{}xxxx.all".format(j))
+    for i in range(10):
+        j = (i + 1) % 10
+        # neg = os.path.join(ORIGINAL_DATA_BASE, "linux32_0{}xxxx.all".format(j))
+        # pos = os.path.join(ORIGINAL_DATA_BASE, "linux32_0{}xxxx.all".format(i))
+        pos = os.path.join(ORIGINAL_DATA_BASE, "inst.{}.pos.txt.clean".format(i))
+        neg = os.path.join(ORIGINAL_DATA_BASE, "inst.{}.pos.txt.clean".format(j))
         tgt = os.path.join(ORIGINAL_DATA_BASE, "inst.{}.neg.txt".format(i))
         create(pos, neg, tgt)
 

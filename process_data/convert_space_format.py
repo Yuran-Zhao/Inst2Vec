@@ -19,8 +19,8 @@ def convert(fin, fout):
 
 def main():
     # for i in range(6):
-    for i in [1]:
-        fin = os.path.join(ORIGINAL_DATA_BASE, "linux32_0{}xxxx.all".format(i))
+    for i in range(10):
+        fin = os.path.join(ORIGINAL_DATA_BASE, "win32_0{}xxxx.all".format(i))
         fout = os.path.join(ORIGINAL_DATA_BASE, "inst.{}.pos.txt".format(i))
         convert(fin, fout)
 
