@@ -1,7 +1,7 @@
 # Inst2Vec Model
-Using [HuggingFace Transformers](https://github.com/huggingface/transformers) to train a BERT for Assemble Language from scratch. We name it `Inst2Vec` for it is designed to generate vectors for assemble instructions.
+Using [HuggingFace Transformers](https://github.com/huggingface/transformers) to train a BERT with dynamic mask for Assemble Language from scratch. We name it `Inst2Vec` for it is designed to generate vectors for assemble instructions.
 
-It is a part of the model we proposed in the paper [A Hierarchical Graph-based Neural Network for Malware Classification]().
+It is a part of the model introduced in the ICONIP 2021 paper [A Hierarchical Graph-based Neural Network for Malware Classification](https://link.springer.com/chapter/10.1007%2F978-3-030-92273-3_51).
 
 The preprocessing procedure can be found in [process_data](./process_data/readme.md).
 
